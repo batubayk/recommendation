@@ -123,12 +123,15 @@ if __name__ == "__main__":
         model = model.to(DEVICE)
 
     for epoch in range(NUM_EPOCHS):
+        model.train()
         train_val_test_loop(model, optimizer, criterion, val_data_loader, DEVICE, PRINT_BATCH_INTERVAL)
 
         # Validation
+        model.eval()
         train_val_test_loop(model, optimizer, criterion, val_data_loader, DEVICE, PRINT_BATCH_INTERVAL, mode="val")
 
     # Test
+    model.eval()
     train_val_test_loop(model, optimizer, criterion, test_data_loader, DEVICE, PRINT_BATCH_INTERVAL, mode="test")
 
     # Save the model
