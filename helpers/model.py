@@ -17,4 +17,4 @@ class RecNetwork(nn.Module):
         others_out = F.leaky_relu(self.hidden(others_inp))
         x = torch.cat((users_embed, movies_embed, others_out),dim=1)
         x = self.output_layer(x)
-        return x
+        return torch.flatten(x)

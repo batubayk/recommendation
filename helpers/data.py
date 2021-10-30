@@ -9,7 +9,7 @@ class RecommendationDataset(Dataset):
         self.dataset = df
         self.max_num_users = df['user_id'].max()
         self.max_num_movies = df['movie_id'].max()
-        self.max_num_occupation = df['occupation'].max()
+        self.max_num_occupation = df['occupation'].max() + 1
 
         self.movie_genre_cols = ["unknown", "Action", "Adventure", "Animation",
                                  "Children's", "Comedy", "Crime", "Documentary", "Drama", "Fantasy",
@@ -24,7 +24,7 @@ class RecommendationDataset(Dataset):
         user_id = int(self.dataset.iloc[idx]['user_id'] - 1)
         user_age = torch.Tensor([self.dataset.iloc[idx]["age"]])
         user_gender = torch.Tensor([self.dataset.iloc[idx]["gender"]])
-        user_occupation = int(self.dataset.iloc[idx]["occupation"] - 1)
+        user_occupation = int(self.dataset.iloc[idx]["occupation"])
         user_occupation_tensor = F.one_hot(torch.as_tensor(user_occupation), num_classes=self.max_num_occupation)
 
         other_features = torch.cat((movie_genres_tensor, user_occupation_tensor, user_gender, user_age))
